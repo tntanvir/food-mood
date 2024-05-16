@@ -86,3 +86,10 @@ body {
     gap: 2rem;
     margin-top: 5rem;
 }
+
+.modal-body {
+    /* background: #000; */
+    display: flex;
+    justify-content: center;
+
+}

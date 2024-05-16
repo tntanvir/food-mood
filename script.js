@@ -14,24 +14,24 @@ btn.addEventListener("click", () => {
                     const div = document.querySelector('#noText');
                     const body = document.querySelector('.modal-body');
                     body.innerHTML = `
-                    <h2>Data Not Found</h2>
+                    <h2>404 ! Not Found</h2>
                     `
                     div.classList.add('show');
                     div.style.display = "block";
                 }
                 if (data.meals.length > 0) {
                     data.meals.map((e) => {
-                        console.log(e.strArea);
+                        // console.log(e.strArea);
                         const div = document.createElement("div");
                         div.classList.add("meal");
                         div.innerHTML = `
                         <div class="card" style="width: 21rem;">
-                            <img src="${e.strMealThumb}" class="card-img-top" alt="...">
+                            <img src="${e.strMealThumb}" class="card-img-top" alt="..."  loading="lazy">
                             <div class="card-body">
                                 <h5 class="card-title">${e.strMeal}</h5>
                                 <p class="card-text">${e.strInstructions.slice(0, 90)}..</p>
 
-                                <button onclick=clickMe(${e}) class="btn btn-primary">Go somewhere</button>
+                                <button onclick='clickMe(${JSON.stringify(e)})' class="btn btn-primary">Go somewhere</button>
                             </div>
                         </div>
                         `
@@ -42,7 +42,15 @@ btn.addEventListener("click", () => {
 
             }
             )
-            .catch(err => console.error(err))
+            .catch(err => {
+                const div = document.querySelector('#noText');
+                div.classList.add('show');
+                div.style.display = "block";
+                const body = document.querySelector('.modal-body');
+                body.innerHTML = `
+                    <h2 class="text-danger">404!</h2>
+                    `
+            })
     }
     else {
         const div = document.querySelector('#noText');
@@ -62,6 +70,22 @@ closeBtn.addEventListener("click", () => {
     div.style.display = "none";
 });
 
-function clickMe(e) {
-    console.log("e.strArea");
+const clickMe = (e) => {
+    // console.log(e);
+    const div = document.querySelector('#noText');
+    div.classList.add('show');
+    div.style.display = "block";
+    const body = document.querySelector('.modal-body');
+    body.innerHTML = `
+                    <div class="card" >
+                        <img src="${e.strMealThumb}" class="card-img-top" alt="..." wight="300">
+                        <div class="card-body">
+                            <h5 class="card-title">${e.strMeal}</h5>
+                            <p class="card-text">${e.strCategory}</p>
+                            <p class="card-text">${e.strArea}</p>
+                            <p class="card-text">${e.strInstructions}</p>
+                            <a class"btn btn-primary" href="${e.strYoutube}" target="_blank">YouTube Link</a>
+                        </div>
+                    </div>
+                    `
 }
